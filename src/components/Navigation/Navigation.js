@@ -19,7 +19,7 @@ const Navigation = () => {
     },[])
 
 
-  return (
+    return (
     <>
     <ul>
         {menuItems.map(item => (
@@ -29,7 +29,7 @@ const Navigation = () => {
         ))}
     </ul>    
     </>
-  )
+    )
 }
 
 
