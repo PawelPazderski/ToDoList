@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
-const DragNDrop = ({columnsDB, itemMenager}) => {
+const DragNDrop = ({columnsDB, refreshData}) => {
     const [columns, setColumns] = useState(columnsDB);
 
     useEffect(()=> {
@@ -9,8 +9,15 @@ const DragNDrop = ({columnsDB, itemMenager}) => {
 
     }, [columnsDB])
 
+    useEffect(()=> {
+        if(columns !== columnsDB){
+            refreshData(columns)
+        }
+
+    }, [columns])
+
     const onDragEnd = (result, columns, setColumns) => {
-        console.log(result)
+        // console.log(result)
         
         if(!result.destination) return;
         const { source, destination } = result
@@ -22,6 +29,7 @@ const DragNDrop = ({columnsDB, itemMenager}) => {
             const destItems = [...destColumn.items]
             const [removed] = sourceItems.splice(source.index, 1)
             destItems.splice(destination.index, 0, removed)
+            // console.log(sourceColumn)
             setColumns({
                 ...columns,
                 [source.droppableId]: {
@@ -33,8 +41,6 @@ const DragNDrop = ({columnsDB, itemMenager}) => {
                     items: destItems
                 }
             })
-            // console.log(columns)
-            
 
         } else {
             const column = columns[source.droppableId]
@@ -48,10 +54,9 @@ const DragNDrop = ({columnsDB, itemMenager}) => {
                 items: copiedItems
             }
         })
-        // console.log(columns)
+        
 
         }
-        // itemMenager(destination.droppableId, result, result.draggableId)
     }
 
 

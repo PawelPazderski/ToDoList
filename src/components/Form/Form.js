@@ -5,10 +5,16 @@ const Form = ({handleAddTask}) => {
     const [deadline, setDeadline] = useState('')
     const [priority, setPriority] = useState('')
 
+    const clearForm = () => {
+        setTask('')
+        setDeadline('')
+        setPriority('')
+    }
+
 
     return (
         <div>
-            <form onSubmit={e => handleAddTask(e, task, deadline, priority)}>
+            <form onSubmit={e => handleAddTask(e, task, deadline, priority, clearForm)}>
                 <input type='text' value={task} placeholder='Task to do' onChange={e => setTask(e.target.value)}></input>
                 <select value={priority} placeholder='Priority' onChange={e => setPriority(e.target.value)}>
                     <option disabled></option>
