@@ -13,17 +13,22 @@ const Form = ({handleAddTask}) => {
 
 
     return (
-        <div>
+        <div className="form-container">
             <form onSubmit={e => handleAddTask(e, task, deadline, priority, clearForm)}>
-                <input type='text' value={task} placeholder='Task to do' onChange={e => setTask(e.target.value)}></input>
+                <label>Task to do</label>
+                <input type='text' value={task} placeholder='Type in the task' onChange={e => setTask(e.target.value)}></input>
+                <label>Priority</label>
                 <select value={priority} placeholder='Priority' onChange={e => setPriority(e.target.value)}>
-                    <option disabled></option>
+                    <option disabled>Set priority</option>
+                    <option disabled hidden></option>
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
                 </select>
-                <input type='date' value={deadline} placeholder='Deadline' onChange={e => setDeadline(e.target.value)}></input>
-                <button type='submit'>Set task</button>
+                <label>Deadline</label>
+                <input onFocus={e => e.target.type="date"} onBlur={e => e.target.type='text'} placeholder="dd/mm/yyyy" value={deadline} onChange={e => setDeadline(e.target.value)}></input>
+                <br/>
+                <button type='submit'>Add task</button>
             </form>
             
         </div>
