@@ -103,7 +103,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                                     padding: 16,
                                                                     margin: '0 0 8px 0',
                                                                     minHeight: '50px',
-                                                                    backgroundColor: snapshot.isDragging ? 'purple' : '#456C86',
+                                                                    backgroundColor: snapshot.isDragging ? '#8766D9' : '#6682D9',
                                                                     color: 'white',
                                                                     ...provided.draggableProps.style
                                                                 }}
