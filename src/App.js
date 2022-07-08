@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Form from './components/Form';
 import DragNDrop from './components/DragNDrop';
 import {v4 as uuidv4} from 'uuid';
+import Swal from 'sweetalert2'
 
 const itemsFromBackEnd = [
   {id: uuidv4(), content: 'First task'},
@@ -46,8 +47,24 @@ function App() {
 
   const addTask = (e, task, deadline, priority, clearForm) => {
     e.preventDefault()
-    setItemsToDo(prev => [...prev, {id: uuidv4(), content: {task, deadline, priority}}])
-    clearForm()
+    if (task && priority && deadline) {
+      setItemsToDo(prev => [...prev, {id: uuidv4(), content: {task, deadline, priority}}])
+      clearForm()
+      Swal.fire({
+        icon: 'success',
+        title: 'Added new task',
+        text: `Task: ${task} / Priority: ${priority.toLowerCase()} / Deadline: ${deadline}`,
+        showConfirmButton: false,
+        timer: 2500
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You need task, priority and deadline to add a task.',
+      })
+    }
+    
     
   }
 

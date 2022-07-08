@@ -13,3 +13,28 @@ body {
     height: 100%;
 }
 
+// .swal-pp {
+//     background-color: green;
+// }
+
+
+.column-title {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 1.5em;
+    color:white;
+    margin-bottom: 0;
+}
+.draggable-div {
+    position: relative;
+}
+.delete-btn {
+    font-family: 'Gloria Hallelujah', cursive;
+    position: absolute;
+    bottom: -4px;
+    right: 8px;
+    background-color: rgba(211, 211, 211, 1);
+    border: 1px solid darkgrey;
+    border-radius: 3px
+    
+
+}

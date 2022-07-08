@@ -1,0 +1,40 @@
+.button-box {
+    position: relative;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        text-shadow: none;
+    }
+    to {
+        transform: scale(1.1);
+        text-shadow: 0 0 5px white;
+        transition: text-shadow 0.1s
+    }
+    
+}
+
+.my-button {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: rgba(66, 112, 220, 0.8);
+    color: white;
+    border: 1px solid lightgrey;
+    font-size: 1.5em;
+    margin: 0 30px;
+    &:hover {
+        animation: pulse 0.5s infinite alternate;
+    }
+}
+
+.step-info {
+    position: absolute;
+    font-size: 5em;
+    font-weight: 900;
+    color: white;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

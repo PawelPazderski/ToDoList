@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import 'sweetalert2/src/sweetalert2.scss';
 
 const DragNDrop = ({columnsDB, refreshData}) => {
     const [columns, setColumns] = useState(columnsDB);
@@ -59,6 +62,56 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         }
     }
 
+    const removeItem = (e) => {
+        const elToDelete = e.currentTarget.parentElement
+        const filtered = columns.col3.items.filter(el => el.id !== elToDelete.dataset.rbdDraggableId )
+
+        let text = "Czy na pewno chesz usunąć zadanie?"
+
+        // if (window.confirm(text) === true) {
+        //     columns.col3.items.filter(el => console.log(el.id) )
+        //     setColumns({
+        //         ...columns,
+        //         "col3" : {
+        //         ...columns.col3,
+        //         items: filtered
+        //     }
+        // })
+        // } else {
+        //     return
+        // }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                'Deleted!',
+                'The task has been deleted.',
+                'success'
+                )
+
+                columns.col3.items.filter(el => console.log(el.id) )
+                setColumns({
+                    ...columns,
+                    "col3" : {
+                    ...columns.col3,
+                    items: filtered
+            }
+        })
+            }
+            })
+
+        
+        
+    }
+
 
     return (
     <div className='drag-n-drop'>
@@ -68,7 +121,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                 return (
                     
                     <div key={id} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                        <h2>{column.name}</h2>
+                        <h2 className="column-title">{column.name}</h2>
                         <div style={{margin: 8}}>
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
@@ -77,13 +130,14 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
                                         style={{
-                                            background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                                            padding: 4,
+                                            background: snapshot.isDraggingOver ? 'rgba(66, 112, 220, 0.8)' : 'rgba(211, 211, 211, 0.8)',
+                                            borderRadius: 10,
+                                            padding: 10,
                                             width: 250,
                                             minHeight: 500
                                         }}
                                     >
-                                        {/* {console.log(column)} */}
+                                        {/* {console.log(columns)} */}
                                         {column.items.map((item, index) => {
                                             return (
                                                 <Draggable
@@ -95,21 +149,24 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                     {(provided, snapshot) => {
                                                         return (
                                                             <div
+                                                                className="draggable-div"
                                                                 ref={provided.innerRef}
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
                                                                 style={{
                                                                     userSelect: 'none',
                                                                     padding: 16,
+                                                                    borderRadius: 4,
                                                                     margin: '0 0 8px 0',
                                                                     minHeight: '50px',
-                                                                    backgroundColor: snapshot.isDragging ? '#8766D9' : '#6682D9',
+                                                                    backgroundColor: snapshot.isDragging ? 'rgba(21, 60, 151, 0.8)' : 'rgba(66, 112, 220, 0.8)',
                                                                     color: 'white',
                                                                     ...provided.draggableProps.style
                                                                 }}
                                                             >
                                                             <p>{item.content.task}</p>
                                                             <p>{item.content.deadline} / {item.content.priority}</p>
+                                                            {(column.name === "Done") && <button className="delete-btn" onClick={e => removeItem(e)}>DELETE</button>}
                                                             </div>
                                                         )
                                                     }}

@@ -1,9 +1,14 @@
 // @import "config/reset";
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 @import "components/drag-n-drop"; 
 @import "components/form"; 
+// @import '~@sweetalert2/themes/dark/dark.scss';
+
 
 body {
     margin: 0 auto;
+    background-color: rgba(211, 211, 211, 0.5);
+    background: linear-gradient(191deg, rgba(189, 188, 189, 0.69) 0%, rgba(66, 112, 220, 1) 100%), url("/assets/body_illustration.jpg") no-repeat center/cover;
     font-family: 'Roboto','Segoe UI', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
