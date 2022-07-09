@@ -89,7 +89,7 @@ const Form = ({handleAddTask}) => {
 
         Swal.fire({
             title: 'Please set the task deadline',
-            html: '<input class="swal2-input" id="expiry-date">',
+            html: '<input class="swal2-input" placeholder="Click here to open calendar" id="expiry-date">',
             stopKeydownPropagation: false,
             preConfirm: () => {
             if (flatpickrInstance.selectedDates[0] < new Date()) {
@@ -109,6 +109,10 @@ const Form = ({handleAddTask}) => {
             }
         })
     }
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
     return (
         <div className="form-container">
@@ -135,7 +139,7 @@ const Form = ({handleAddTask}) => {
                 </div>
                 <div>
                     <MyButton text="Priority" before={2} task={addSweetLevel} />
-                    <p className="task-summary">{priority}</p>
+                    <p className="task-summary">{capitalizeFirstLetter(priority)}</p>
                 </div>
                 <div>
                 <MyButton text="DeadLine" before={3} task={addSweetDate}/>
@@ -144,7 +148,10 @@ const Form = ({handleAddTask}) => {
                 
                 
                 
-                {(task && priority && deadline) && <MyButton text="ADD TASK" before={4} task={e => handleAddTask(e, task, deadline, priority, clearForm)}/>}
+                {/* <MyButton text="ADD TASK" before={4} task={e => handleAddTask(e, task, deadline, priority, clearForm)}/> */}
+                {(task && priority && deadline) && <MyButton text="ADD TASK" task={e => handleAddTask(e, task, deadline, priority, clearForm)}/>}
+
+
                 {/* <button onClick={addSweetTask}>Task</button>
                 <button onClick={addSweetLevel}>Priority</button>
                 <button onClick={addSweetDate}>Deadline</button> */}

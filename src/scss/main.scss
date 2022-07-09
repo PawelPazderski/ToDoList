@@ -24,4 +24,26 @@ code {
 
 .active {
     color: pink;
+    color: rgba(0, 0, 0, 0.397);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    margin-left: 5px;
+}
+
+::-webkit-scrollbar-track {
+    // background: #f1f1f180;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.493);
+    border-radius: 10px;
+}
+
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:rgba(0, 0, 0, 0.3);
 }

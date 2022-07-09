@@ -44,6 +44,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                     items: destItems
                 }
             })
+            // localStorage.setItem("cols", JSON.stringify(columns))
 
         } else {
             const column = columns[source.droppableId]
@@ -57,7 +58,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                 items: copiedItems
             }
         })
-        
+        // localStorage.setItem("cols", JSON.stringify(columns))
 
         }
     }
@@ -67,19 +68,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const filtered = columns.col3.items.filter(el => el.id !== elToDelete.dataset.rbdDraggableId )
 
         let text = "Czy na pewno chesz usunąć zadanie?"
-
-        // if (window.confirm(text) === true) {
-        //     columns.col3.items.filter(el => console.log(el.id) )
-        //     setColumns({
-        //         ...columns,
-        //         "col3" : {
-        //         ...columns.col3,
-        //         items: filtered
-        //     }
-        // })
-        // } else {
-        //     return
-        // }
 
         Swal.fire({
             title: 'Are you sure?',
@@ -132,9 +120,11 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                         style={{
                                             background: snapshot.isDraggingOver ? 'rgba(66, 112, 220, 0.8)' : 'rgba(211, 211, 211, 0.8)',
                                             borderRadius: 10,
+                                            overflowX: "hidden",
+                                            overflowY: "auto",
                                             padding: 10,
                                             width: 250,
-                                            minHeight: 500
+                                            height: 500
                                         }}
                                     >
                                         {/* {console.log(columns)} */}
@@ -157,6 +147,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                                     userSelect: 'none',
                                                                     padding: 16,
                                                                     borderRadius: 4,
+                                                                    boxShadow: snapshot.isDragging ? "2px 15px 5px rgba(0, 0, 0, 0.1)" : "none",
                                                                     margin: '0 0 8px 0',
                                                                     minHeight: '50px',
                                                                     backgroundColor: snapshot.isDragging ? 'rgba(21, 60, 151, 0.8)' : 'rgba(66, 112, 220, 0.8)',

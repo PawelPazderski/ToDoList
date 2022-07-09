@@ -27,6 +27,9 @@
     &:hover {
         animation: pulse 0.5s infinite alternate;
     }
+    &focus-visible {
+        border: none;
+    }
 }
 
 .step-info {
@@ -37,4 +40,11 @@
     top: 0;
     left: 0;
     z-index: -1;
+}
+
+.my-button-add {
+    background-color: rgba(151, 66, 220, 0.8);
+    width: 80px;
+    height: 80px;
+    font-size: 1.2em;
 }
