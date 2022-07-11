@@ -1,8 +1,22 @@
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
 .drag-n-drop {
     display: flex;
     justify-content: center;
     height: 100%;
 }
+
+// .swal-pp {
+//     background-color: green;
+// }
+
 
 .column-title {
     font-family: 'Gloria Hallelujah', cursive;
@@ -10,14 +24,9 @@
     color:white;
     margin-bottom: 0;
 }
-
 .draggable-div {
     position: relative;
-    p {
-        margin:10px;
-    }
 }
-
 .delete-btn {
     font-family: 'Gloria Hallelujah', cursive;
     position: absolute;
@@ -25,7 +34,7 @@
     right: 8px;
     background-color: rgba(211, 211, 211, 1);
     border: 1px solid darkgrey;
-    border-radius: 3px;
+    border-radius: 3px
     
 
 }

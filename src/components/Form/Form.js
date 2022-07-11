@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 
 import MyButton from './../MyButton'
+
 import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2/src/sweetalert2.js'
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/themes/airbnb.css'
+import { getAllByPlaceholderText } from '@testing-library/react';
 
 
 const Form = ({handleAddTask}) => {
@@ -21,7 +24,7 @@ const Form = ({handleAddTask}) => {
     }
 
     const addSweetTask = () => {
-
+        // console.log('dupa')
         ( async () => {
             const { value: text } = await Swal.fire({
                 input: 'text',
@@ -76,6 +79,8 @@ const Form = ({handleAddTask}) => {
                 setPriority(level)
                 // Swal.fire(`You selected: ${level}`)
                 }
+
+
         })()
     }
 
@@ -111,7 +116,22 @@ const Form = ({handleAddTask}) => {
 
     return (
         <div className="form-container">
-
+            {/* <form onSubmit={e => handleAddTask(e, task, deadline, priority, clearForm)}>
+                <label>Task to do</label>
+                <input type='text' value={task} placeholder='Type in the task' onChange={e => setTask(e.target.value)}></input>
+                <label>Priority</label>
+                <select value={priority} placeholder='Priority' onChange={e => setPriority(e.target.value)}>
+                    <option disabled>Set priority</option>
+                    <option disabled hidden></option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                </select>
+                <label>Deadline</label>
+                <input onFocus={e => e.target.type="date"} onBlur={e => e.target.type='text'} placeholder="dd/mm/yyyy" value={deadline} onChange={e => setDeadline(e.target.value)}></input>
+                <br/>
+                <button type='submit'>Add task</button>
+            </form> */}
             <div className="task-set-buttons">
                 <div>
                     <MyButton text="Task" before={1} task={addSweetTask} />
@@ -122,13 +142,25 @@ const Form = ({handleAddTask}) => {
                     <p className="task-summary">{capitalizeFirstLetter(priority)}</p>
                 </div>
                 <div>
-                    <MyButton text="DeadLine" before={3} task={addSweetDate}/>
+                <MyButton text="DeadLine" before={3} task={addSweetDate}/>
                     <p className="task-summary task-summary-right">{deadline}</p>
                 </div>
+                
+                
+                
+                {/* <MyButton text="ADD TASK" before={4} task={e => handleAddTask(e, task, deadline, priority, clearForm)}/> */}
                 {(task && priority && deadline) && <MyButton text="ADD TASK" task={e => handleAddTask(e, task, deadline, priority, clearForm)}/>}
+
+
+                {/* <button onClick={addSweetTask}>Task</button>
+                <button onClick={addSweetLevel}>Priority</button>
+                <button onClick={addSweetDate}>Deadline</button> */}
             </div>
+            
+            {/* <button onClick={e => handleAddTask(e, task, deadline, priority, clearForm)}>ADD TASK</button> */}
+            
         </div>
     )
 }
 
-export default Form;
+export default Form
