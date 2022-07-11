@@ -20,7 +20,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
     }, [columns])
 
     const onDragEnd = (result, columns, setColumns) => {
-        // console.log(result)
         
         if(!result.destination) return;
         const { source, destination } = result
@@ -44,7 +43,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                     items: destItems
                 }
             })
-            // localStorage.setItem("cols", JSON.stringify(columns))
 
         } else {
             const column = columns[source.droppableId]
@@ -58,7 +56,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                 items: copiedItems
             }
         })
-        // localStorage.setItem("cols", JSON.stringify(columns))
 
         }
     }

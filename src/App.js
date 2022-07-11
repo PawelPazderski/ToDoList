@@ -54,18 +54,15 @@ function App() {
   useEffect(()=> {
     // localStorage.clear()
     const colsFromLocal = localStorage.getItem("cols")
-    // if (colsFromLocal) {
-    //   setColumns(JSON.parse(colsFromLocal))
-    // }
+
     localStorage.setItem("cols", JSON.stringify(columns))
   },[columns])
 
   const addTask = (e, task, deadline, priority, clearForm) => {
     e.preventDefault()
     if (task && priority && deadline) {
-      // setItemsToDo(prev => [...prev, {id: uuidv4(), content: {task, deadline, priority}}])
-      setColumns(prev=> ({
 
+      setColumns(prev=> ({
         ...prev, 
         col1: {name: 'To do', items: [...prev.col1.items, {id: uuidv4(), content: {task, deadline, priority}}]}}))
       clearForm()
@@ -76,9 +73,6 @@ function App() {
         showConfirmButton: false,
         timer: 2500
       })
-      
-
-      // localStorage.setItem("cols", JSON.stringify(columns))
 
     } else {
       Swal.fire({
@@ -93,23 +87,8 @@ function App() {
   const refreshData = (data) => {
     setColumns(data)
     setItemsToDo(data.col1.items)
-    // localStorage.setItem("cols", JSON.stringify(columns))
   }
   
-
-  useEffect(()=>{
-    // setColumns(prev=> ({
-    //   ...prev, 
-    //   col1: {name: 'To do', items: itemsToDo}}))
-
-      // localStorage.setItem("cols", JSON.stringify(columns))
-
-      // const colsFromLocal = localStorage.getItem("cols")
-      // console.log(JSON.parse(colsFromLocal))
-
-  }, [itemsToDo])
-
-
 
   return (
     <div className="App">
