@@ -1,9 +1,11 @@
-// @import "config/reset";
+@import "config/basic-reset";
 @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 @import "components/drag-n-drop"; 
 @import "components/form"; 
-// @import '~@sweetalert2/themes/dark/dark.scss';
 
+html, body, #root {
+    height: 100%;
+}
 
 body {
     margin: 0 auto;
