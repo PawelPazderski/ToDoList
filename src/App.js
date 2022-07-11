@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Form from './components/Form';
 import DragNDrop from './components/DragNDrop';
-import Home from './components/Home';
+import Footer from './components/Footer';
 import {v4 as uuidv4} from 'uuid';
 import Swal from 'sweetalert2'
 
@@ -73,7 +73,7 @@ function App() {
     <div className="App">
       <Form handleAddTask={addTask}/>
       <DragNDrop columnsDB={columns} itemsDB={itemsToDo} refreshData={refreshData} />
-      <Home />
+      <Footer />
     </div>
   );
 }

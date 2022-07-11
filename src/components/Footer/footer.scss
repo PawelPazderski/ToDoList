@@ -1,0 +1,17 @@
+.home-footer {
+    font-size: small;
+    width: 100vw;
+    color: darkgrey;
+    border-top: 1px solid lightgrey;
+    padding-top: 1em;
+    text-align: center;
+    margin-bottom: 15px;
+    position: fixed;
+    bottom: 0;
+    p:before {
+        content:"\00a9";
+        margin-right: 3px;
+      }
+    
+
+}
