@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 
 function App() {
   const [itemsToDo, setItemsToDo] = useState([])
+  const [time, setTime] = useState(Date.now())
   const [columns, setColumns] = useState({
     col1: {
       name: 'To do',
@@ -31,10 +32,20 @@ function App() {
     setColumns(JSON.parse(colsFromLocal))
   },[])
 
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+
   useEffect(()=> {
     // localStorage.clear()
-    const colsFromLocal = localStorage.getItem("cols")
+    // const colsFromLocal = localStorage.getItem("cols")
+
     localStorage.setItem("cols", JSON.stringify(columns))
+
   },[columns])
 
   const addTask = (e, task, deadline, priority, clearForm) => {

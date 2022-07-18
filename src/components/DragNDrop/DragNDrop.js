@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import Swal from 'sweetalert2'
-// import Swal from 'sweetalert2/dist/sweetalert2.js'
-// import 'sweetalert2/src/sweetalert2.scss';
 
 const DragNDrop = ({columnsDB, refreshData}) => {
     const [columns, setColumns] = useState(columnsDB);
+    const myItem = useRef(null)
 
     useEffect(()=> {
         setColumns(columnsDB)
@@ -17,7 +16,58 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             refreshData(columns)
         }
 
-    }, [columns])
+    }, [columns]);
+
+
+
+    const msToTime = (seconds) => {
+        seconds = Number(seconds);
+        const d = Math.floor(seconds / (3600*24));
+        const h = Math.floor(seconds % (3600*24) / 3600);
+        const m = Math.floor(seconds % 3600 / 60);
+        const s = Math.floor(seconds % 60);
+
+        const dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
+        const hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
+        // var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
+        const mDisplay = m > 0 ? minTwoDigits(m) + "min " : "";
+        // var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
+        const sDisplay = minTwoDigits(s) + "sec"
+
+        // return dDisplay + hDisplay + mDisplay + sDisplay;
+        return dDisplay + hDisplay;
+    }
+
+    const minTwoDigits = (n) => {
+        return (n < 10 ? '0' : '') + n;
+    }
+    
+
+    const daysLeft = (item) => {
+        // console.log(item.content)
+        const {deadline} = item.content;
+        const deadlineForNewDate = deadline.split(".").reverse().join("-")
+        // console.log(deadline2)
+        let date1 = new Date(deadlineForNewDate)
+        let date2 = new Date()
+
+        const diffTime = date1.getTime() - date2.getTime()
+        // const daysTotal = Math.ceil(diffTime / (1000))
+        const seconds = diffTime / 1000
+        const daysTotal = Math.ceil(diffTime / (1000*3600*24))
+
+        if (daysTotal <= 3 && daysTotal > 0) {
+            return <span style={{color: "pink"}}>{msToTime(seconds)}</span>
+        } else if (daysTotal === 0) {
+            return <span style={{color: "pink"}}>deadline exceeded</span>
+        } else {
+            return <span>{msToTime(seconds)}</span>
+        }
+        
+        }
+        
+
+
 
     const onDragEnd = (result, columns, setColumns) => {
         // console.log(result)
@@ -91,13 +141,14 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                     "col3" : {
                     ...columns.col3,
                     items: filtered
+                    }
+                })
             }
-        })
-            }
-            })
+        })   
+    }
 
-        
-        
+    const test = () => {
+        console.log(myItem.current)
     }
 
 
@@ -157,6 +208,8 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                             >
                                                             <p>{item.content.task}</p>
                                                             <p>{item.content.deadline} / {item.content.priority}</p>
+                                                            <p ref={myItem} >Time left: {daysLeft(item)}</p>
+                                                            <p onClick={test}>kliknij mnie</p>
                                                             {(column.name === "Done") && <button className="delete-btn" onClick={e => removeItem(e)}>DELETE</button>}
                                                             </div>
                                                         )
@@ -179,4 +232,4 @@ const DragNDrop = ({columnsDB, refreshData}) => {
     )
     }
 
-export default DragNDrop
+export default DragNDrop;

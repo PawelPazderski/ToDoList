@@ -7,9 +7,9 @@ import 'flatpickr/dist/themes/airbnb.css'
 
 
 const Form = ({handleAddTask}) => {
-    const [task, setTask] = useState('')
-    const [deadline, setDeadline] = useState('')
-    const [priority, setPriority] = useState('')
+    const [task, setTask] = useState('');
+    const [deadline, setDeadline] = useState('');
+    const [priority, setPriority] = useState('');
 
     const clearForm = () => {
         setTask('')

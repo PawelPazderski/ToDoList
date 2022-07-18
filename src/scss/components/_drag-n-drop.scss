@@ -18,7 +18,7 @@ html, body, #root {
 .draggable-div {
     position: relative;
     p {
-        margin: 1em;
+        margin: 10px;
     }
 }
 .delete-btn {
@@ -28,7 +28,10 @@ html, body, #root {
     right: 8px;
     background-color: rgba(211, 211, 211, 1);
     border: 1px solid darkgrey;
-    border-radius: 3px
-    
-
+    border-radius: 3px;
+    &:hover {
+        background-color: darkgrey;
+        color: white;
+        cursor: pointer;
+    }
 }
