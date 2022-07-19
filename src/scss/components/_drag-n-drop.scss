@@ -35,3 +35,49 @@ html, body, #root {
         cursor: pointer;
     }
 }
+
+// .task-info-container {
+//     background-color: rgba(66, 112, 220, 0.8);
+//     width: 100vw;
+//     height: 100vh;
+//     position: absolute;
+// }
+
+.task-info {
+    font-family: 'Gloria Hallelujah', cursive;
+    background-color: aqua;
+    background: url("/assets/notes.png") no-repeat center/contain;
+    width: 400px;
+    height: 550px;
+    position: absolute;
+    z-index: 5;
+    top: 15vh;
+    right: 10vw;
+}
+
+.info-btn {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 0.7em;
+    background-color: rgba(211, 211, 211, 1);
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    &:hover {
+        background-color: darkgrey;
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.select-test {
+    background-color: red;
+}
+
+.select-test option,
+.select-test optgroup{
+    color: rgba(21, 60, 151);
+    background-color: lightgrey;
+}
+
+.swal2-select {
+    color:red
+}

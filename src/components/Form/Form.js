@@ -10,11 +10,13 @@ const Form = ({handleAddTask}) => {
     const [task, setTask] = useState('');
     const [deadline, setDeadline] = useState('');
     const [priority, setPriority] = useState('');
+    const [addInfo, setAddInfo] = useState('');
 
     const clearForm = () => {
         setTask('')
         setDeadline('')
         setPriority('')
+        setAddInfo('')
     }
 
     const addSweetTask = () => {
@@ -22,7 +24,9 @@ const Form = ({handleAddTask}) => {
         ( async () => {
             const { value: text } = await Swal.fire({
                 input: 'text',
-                inputLabel: 'Task description',
+                inputLabel: 'Task',
+                background: 'rgba(21, 60, 151, 0.8)',
+                color: "white",
                 inputPlaceholder: 'Enter the task here',
                 inputAttributes: {
                     'aria-label': 'Enter the task here'
@@ -57,6 +61,9 @@ const Form = ({handleAddTask}) => {
                     }
                 },
                 inputPlaceholder: 'Choose from list below',
+                background: 'rgba(21, 60, 151, 0.8)',
+                color: "white",
+                customClass: 'select-test',
                 showCancelButton: true,
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
@@ -73,8 +80,6 @@ const Form = ({handleAddTask}) => {
                 setPriority(level)
                 // Swal.fire(`You selected: ${level}`)
                 }
-
-
         })()
     }
 
@@ -85,6 +90,8 @@ const Form = ({handleAddTask}) => {
             title: 'Please set the task deadline',
             html: '<input class="swal2-input" placeholder="Click here to open calendar" id="expiry-date">',
             stopKeydownPropagation: false,
+            background: 'rgba(21, 60, 151, 0.8)',
+            color: "white",
             preConfirm: () => {
             if (flatpickrInstance.selectedDates[0] < new Date()) {
                 Swal.showValidationMessage(`The task date can't be in the past`)
@@ -102,6 +109,34 @@ const Form = ({handleAddTask}) => {
             )
             }
         })
+    }
+
+    const addSweetInfo = () => {
+
+        ( async () => {
+            const { value: text } = await Swal.fire({
+                input: 'textarea',
+                inputLabel: 'Add info (optional)',
+                background: 'rgba(21, 60, 151, 0.8)',
+                color: "white",
+                inputPlaceholder: 'Write additional info here',
+                inputAttributes: {
+                    'aria-label': 'Enter the additional info here'
+                },
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You need to write something!'
+                    }
+                }
+                })
+                
+                if (text) {
+                setAddInfo(text)
+                // Swal.fire(text)
+                }
+
+        })()
     }
 
     const capitalizeFirstLetter = (string) => {
@@ -123,7 +158,10 @@ const Form = ({handleAddTask}) => {
                 <MyButton text="DeadLine" before={3} task={addSweetDate}/>
                     <p className="task-summary task-summary-right">{deadline}</p>
                 </div>
-                {(task && priority && deadline) && <MyButton text="ADD TASK" task={e => handleAddTask(e, task, deadline, priority, clearForm)}/>}
+                {(task && priority && deadline) && <MyButton before={4} text="Description" task={addSweetInfo} option={true}/>}
+                {(task && priority && deadline) && <MyButton text="ADD TASK" task={e => handleAddTask(e, task, deadline, priority, addInfo, clearForm)}/>}
+                {/* <MyButton before={4} text="Description" task={addSweetInfo} option={true}/>
+                <MyButton text="ADD TASK" task={e => handleAddTask(e, task, deadline, priority, addInfo, clearForm)}/> */}
             </div>
             
         </div>

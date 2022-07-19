@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import InfoList from './../InfoList'
 import Swal from 'sweetalert2'
 
 const DragNDrop = ({columnsDB, refreshData}) => {
     const [columns, setColumns] = useState(columnsDB);
+    const [details, setDetails] = useState(false)
     const myItem = useRef(null)
 
     useEffect(()=> {
@@ -30,12 +32,13 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
         const hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
         // var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
-        const mDisplay = m > 0 ? minTwoDigits(m) + "min " : "";
+        const mDisplay = m > 0 ? minTwoDigits(m) + " min " : "";
         // var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
         const sDisplay = minTwoDigits(s) + "sec"
 
         // return dDisplay + hDisplay + mDisplay + sDisplay;
-        return dDisplay + hDisplay;
+        return dDisplay + hDisplay + mDisplay;
+        // return dDisplay + hDisplay;
     }
 
     const minTwoDigits = (n) => {
@@ -58,7 +61,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
 
         if (daysTotal <= 3 && daysTotal > 0) {
             return <span style={{color: "pink"}}>{msToTime(seconds)}</span>
-        } else if (daysTotal === 0) {
+        } else if (daysTotal <= 0) {
             return <span style={{color: "pink"}}>deadline exceeded</span>
         } else {
             return <span>{msToTime(seconds)}</span>
@@ -123,16 +126,22 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            background: 'rgba(21, 60, 151, 0.8)',
+            color: "white",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                'Deleted!',
-                'The task has been deleted.',
-                'success'
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The task has been deleted.',
+                    icon: 'info',
+                    background: 'rgba(21, 60, 151, 0.8)',
+                    color: "white",
+                }
+
                 )
 
                 columns.col3.items.filter(el => console.log(el.id) )
@@ -147,13 +156,41 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         })   
     }
 
-    const test = () => {
-        console.log(myItem.current)
+    const showDetails = (item) => {
+        console.log(item)
+        const timeLeft = daysLeft(item)
+        const info = [`Time left: ${timeLeft.props.children}`,`${item.content.addInfo}` ]
+
+        console.log(timeLeft.props.children)
+
+        if (item.content.addInfo.length) {
+            Swal.fire({
+                title: 'More details:',
+                text: `${item.content.addInfo}`,
+                footer: `Time left: ${timeLeft.props.children}`,
+                background: 'rgba(21, 60, 151, 0.8)',
+                color: "white",
+            })
+        } else {
+            Swal.fire({
+                title: 'More details:',
+                text: "No additional description",
+                footer: `Time left: ${timeLeft.props.children}`,
+                background: 'rgba(21, 60, 151, 0.8)',
+                color: "white",
+            })
+
+        }
+        
+
+
     }
 
 
+
     return (
-    <div className='drag-n-drop'>
+        <>
+        <div className='drag-n-drop'>
         <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
             {Object.entries(columns).map(([id, column]) => {
                 // {console.log(columns)}
@@ -162,6 +199,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                     <div key={id} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <h2 className="column-title">{column.name}</h2>
                         <div style={{margin: 8}}>
+                        
                         <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
                                 return (
@@ -186,9 +224,11 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                     draggableId={item.id}
                                                     index={index}
                                                     droppableId={id}
-                                                >
+                                                    task={item.task}
+                                                    >
                                                     {(provided, snapshot) => {
                                                         return (
+                                                            <>
                                                             <div
                                                                 className="draggable-div"
                                                                 ref={provided.innerRef}
@@ -205,13 +245,18 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                                     color: 'white',
                                                                     ...provided.draggableProps.style
                                                                 }}
-                                                            >
-                                                            <p>{item.content.task}</p>
-                                                            <p>{item.content.deadline} / {item.content.priority}</p>
-                                                            <p ref={myItem} >Time left: {daysLeft(item)}</p>
-                                                            <p onClick={test}>kliknij mnie</p>
-                                                            {(column.name === "Done") && <button className="delete-btn" onClick={e => removeItem(e)}>DELETE</button>}
+                                                                >
+                                                                <h3>{item.content.task}</h3>
+                                                                <p>Deadline: {item.content.deadline}</p>
+                                                                <p>Priority: {item.content.priority}</p>
+                                                                {/* <p>Time left: {daysLeft(item)}</p>
+                                                                <p>{item.content.addInfo}</p> */}
+                                                                <button className="info-btn" onClick={() => showDetails(item)}>DETAILS</button>
+                                                                {/* { details && <button className="info-btn" onClick={(e) => hideDetails(e)}>HIDE DETAILS</button> } */}
+                                                                {(column.name === "Done") && <button className="delete-btn" onClick={e => removeItem(e)}>DELETE</button>}
                                                             </div>
+                                                            </>
+                                                            
                                                         )
                                                     }}
                                                 </Draggable>
@@ -229,6 +274,8 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             })}
         </DragDropContext>
     </div>
+        </>
+    
     )
     }
 

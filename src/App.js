@@ -48,18 +48,20 @@ function App() {
 
   },[columns])
 
-  const addTask = (e, task, deadline, priority, clearForm) => {
+  const addTask = (e, task, deadline, priority, addInfo, clearForm) => {
     e.preventDefault()
     if (task && priority && deadline) {
 
       setColumns(prev=> ({
 
         ...prev, 
-        col1: {name: 'To do', items: [...prev.col1.items, {id: uuidv4(), content: {task, deadline, priority}}]}}))
+        col1: {name: 'To do', items: [...prev.col1.items, {id: uuidv4(), content: {task, deadline, priority, addInfo}}]}}))
       clearForm()
       Swal.fire({
-        icon: 'success',
+        icon: 'info',
         title: 'Added new task',
+        background: 'rgba(21, 60, 151, 0.8)',
+        color: "white",
         text: `Task: ${task} / Priority: ${priority.toLowerCase()} / Deadline: ${deadline}`,
         showConfirmButton: false,
         timer: 2500
