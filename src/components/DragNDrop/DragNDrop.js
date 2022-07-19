@@ -30,7 +30,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const s = Math.floor(seconds % 60);
 
         const dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
-        const hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
+        const hDisplay = h > 0 ? h + (h === 1 ? " h " : " h ") : "";
         // var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
         const mDisplay = m > 0 ? minTwoDigits(m) + " min " : "";
         // var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
@@ -60,11 +60,11 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const daysTotal = Math.ceil(diffTime / (1000*3600*24))
 
         if (daysTotal <= 3 && daysTotal > 0) {
-            return <span style={{color: "pink"}}>{msToTime(seconds)}</span>
+            return <span style={{color: "pink"}}>Time left: {msToTime(seconds)}</span>
         } else if (daysTotal <= 0) {
             return <span style={{color: "pink"}}>deadline exceeded</span>
         } else {
-            return <span>{msToTime(seconds)}</span>
+            return <span style={{display: "none"}}>{msToTime(seconds)}</span>
         }
         
         }
@@ -167,7 +167,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             Swal.fire({
                 title: 'More details:',
                 text: `${item.content.addInfo}`,
-                footer: `Time left: ${timeLeft.props.children}`,
+                footer: `${timeLeft.props.children}`,
                 background: 'rgba(21, 60, 151, 0.8)',
                 color: "white",
             })
@@ -249,8 +249,8 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                                                                 <h3>{item.content.task}</h3>
                                                                 <p>Deadline: {item.content.deadline}</p>
                                                                 <p>Priority: {item.content.priority}</p>
-                                                                {/* <p>Time left: {daysLeft(item)}</p>
-                                                                <p>{item.content.addInfo}</p> */}
+                                                                <p>{daysLeft(item)}</p>
+                                                                {/* <p>{item.content.addInfo}</p> */}
                                                                 <button className="info-btn" onClick={() => showDetails(item)}>DETAILS</button>
                                                                 {/* { details && <button className="info-btn" onClick={(e) => hideDetails(e)}>HIDE DETAILS</button> } */}
                                                                 {(column.name === "Done") && <button className="delete-btn" onClick={e => removeItem(e)}>DELETE</button>}
