@@ -85,7 +85,10 @@ function App() {
   return (
     <div className="App">
       <Form handleAddTask={addTask}/>
-      <DragNDrop columnsDB={columns} itemsDB={itemsToDo} refreshData={refreshData} />
+      <DragNDrop 
+          columnsDB={columns} 
+          itemsDB={itemsToDo} 
+          refreshData={refreshData} />
       <Footer />
     </div>
   );
