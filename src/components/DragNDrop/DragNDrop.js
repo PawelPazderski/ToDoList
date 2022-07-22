@@ -29,7 +29,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const m = Math.floor(seconds % 3600 / 60);
         const s = Math.floor(seconds % 60);
 
-        const dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
+        const dDisplay = d > 0 ? d + (d === 1 ? " day " : " days ") : "";
         const hDisplay = h > 0 ? h + (h === 1 ? " h " : " h ") : "";
         // var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
         const mDisplay = m > 0 ? minTwoDigits(m) + " min " : "";
@@ -131,8 +131,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
                     color: "white",
                 }
                 )
-
-                columns.col3.items.filter(el => console.log(el.id) )
                 setColumns({
                     ...columns,
                     "col3" : {
@@ -146,7 +144,6 @@ const DragNDrop = ({columnsDB, refreshData}) => {
 
     const showDetails = (item) => {
         const timeLeft = daysLeft(item)
-        const info = [`Time left: ${timeLeft.props.children}`,`${item.content.addInfo}` ]
 
         if (item.content.addInfo.length) {
             Swal.fire({
@@ -160,7 +157,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             Swal.fire({
                 title: 'More details:',
                 text: "No additional description",
-                footer: `Time left: ${timeLeft.props.children}`,
+                footer: `${timeLeft.props.children.join(" ")}`,
                 background: 'rgba(21, 60, 151, 0.8)',
                 color: "white",
             })
