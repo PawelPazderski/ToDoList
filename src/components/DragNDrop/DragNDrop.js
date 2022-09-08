@@ -57,7 +57,7 @@ const DragNDrop = ({columnsDB, refreshData}) => {
         const daysTotal = Math.ceil(diffTime / (1000*3600*24))
 
         if (daysTotal <= 3 && daysTotal > 0) {
-            return <span style={{color: "pink"}}>Time left: {msToTime(seconds)}</span>
+            return <span style={{color: "pink"}}>{msToTime(seconds)}</span>
         } else if (daysTotal <= 0) {
             return <span style={{color: "pink"}}>Deadline exceeded</span>
         } else {
@@ -145,6 +145,8 @@ const DragNDrop = ({columnsDB, refreshData}) => {
     const showDetails = (item) => {
         const timeLeft = daysLeft(item)
 
+        console.log(timeLeft.props.children)
+
         if (item.content.addInfo.length) {
             Swal.fire({
                 title: 'More details:',
@@ -157,7 +159,8 @@ const DragNDrop = ({columnsDB, refreshData}) => {
             Swal.fire({
                 title: 'More details:',
                 text: "No additional description",
-                footer: `${timeLeft.props.children.join(" ")}`,
+                footer: `Time left: ${timeLeft.props.children}`,
+                // footer: `${timeLeft.props.children.join(" ")}`,
                 background: 'rgba(21, 60, 151, 0.8)',
                 color: "white",
             })
